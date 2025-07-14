@@ -44,7 +44,7 @@
     }
 
     function getCategories(){
-        $db = getDB();
+        $db = getDB();  
         $sql = "SELECT nom_categorie FROM emprunts_categorie_objet";
         $result = mysqli_query($db, $sql);
         $liste = [];
@@ -204,6 +204,11 @@ function getImagesObjet($idObjet) {
     return $images;
 }
 
+function emprunter($idObjet, $idMembre, $duree){
+        $db = getDB();
+        $sql = "INSERT INTO emprunts_emprunt (id_objet, id_membre, date_emprunt, date_retour)
+                VALUES ($idObjet, $idMembre, CURRENT_DATE(), DATE_ADD(CURRENT_DATE(), INTERVAL $duree DAY))";
+        mysqli_query($db, $sql);
+    }
 
-
-    ?>
+?>
