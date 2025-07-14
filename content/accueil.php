@@ -75,8 +75,8 @@ $categories = getCategories(); // Doit retourner un tableau simple de noms
                         <tbody>
                             <?php foreach ($listeObjets as $o): ?>
                                     <tr onclick="location.href='fiche_objet.php?objet=<?= $o['nom'] ?>'">
-                                        <td><?= htmlspecialchars($o['nom']) ?></td>
-                                        <td><?= htmlspecialchars($o['retour']) ?: '—' ?></td>
+                                        <td><?= $o['nom'] ?></td>
+                                        <td><?= $o['retour'] != null ? $o['retour'] : '—' ?></td>
                                     </tr>
                             <?php endforeach; ?>
                             <?php if (empty($listeObjets)): ?>
