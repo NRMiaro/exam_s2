@@ -3,7 +3,9 @@ session_start();
 include("../fonctions/fonctions.php");
 
 $categorieSelectionnee = $_GET['categorie'] ?? "TOUS";
-$listeObjets = getObjetsParCategorie($categorieSelectionnee);
+$extraitNom = $_GET['nom'] ?? '';
+$disponibilite = isset($_GET['disponible']) ? true : false;
+$listeObjets = getObjetsWithFiltre($categorieSelectionnee, $extraitNom, $disponibilite);
 $categories = getCategories(); // Doit retourner un tableau simple de noms
 ?>
 
@@ -21,11 +23,10 @@ $categories = getCategories(); // Doit retourner un tableau simple de noms
 
     <div class="container py-5">
         
-        <!-- Filtrage par catégorie -->
         <div class="card bg-secondary bg-opacity-75 text-white mb-4 shadow">
             <div class="card-body">
                 <form action="accueil.php" method="get" class="row g-3 align-items-end">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="categorie" class="form-label">Filtrer par catégorie :</label>
                         <select name="categorie" id="categorie" class="form-select">
                             <option value="TOUS" <?= $categorieSelectionnee === "TOUS" ? "selected" : "" ?>>-- Toutes catégories --</option>
@@ -36,10 +37,26 @@ $categories = getCategories(); // Doit retourner un tableau simple de noms
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="col-md-auto">
+
+                    <div class="col-md-4">
+                        <label for="nom" class="form-label">Nom de l'objet :</label>
+                        <input type="text" name="nom" id="nom" value="<?= $extraitNom ?>" class="form-control">
+                    </div>
+
+                    <div class="col-md-2 form-check mt-4">
+                        <input class="form-check-input" type="checkbox" name="disponible" id="disponible" <?= $disponibilite ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="disponible">Disponible uniquement</label>
+                    </div>
+
+                    <div class="col-md-2 d-grid">
                         <button type="submit" class="btn btn-light">Appliquer</button>
                     </div>
+
+                    <div class="col -md-auto">
+                        <a href="ajout.php" class="btn btn-primary">Ajouter un objet</a>
+                    </div>
                 </form>
+
             </div>
         </div>
 
@@ -57,10 +74,10 @@ $categories = getCategories(); // Doit retourner un tableau simple de noms
                         </thead>
                         <tbody>
                             <?php foreach ($listeObjets as $o): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($o['nom']) ?></td>
-                                    <td><?= htmlspecialchars($o['retour']) ?: '—' ?></td>
-                                </tr>
+                                    <tr onclick="location.href='fiche_objet.php?objet=<?= $o['nom'] ?>'">
+                                        <td><?= htmlspecialchars($o['nom']) ?></td>
+                                        <td><?= htmlspecialchars($o['retour']) ?: '—' ?></td>
+                                    </tr>
                             <?php endforeach; ?>
                             <?php if (empty($listeObjets)): ?>
                                 <tr>

@@ -1,9 +1,9 @@
 <?php 
 function getDB(){
     $hostname = 'localhost';
-    $username = 'ETU003913';
-    $mdp = 'nmR0jD0G';
-    $database = "db_s2_ETU003913";
+    $username = 'root';
+    $mdp = '';
+    $database = "gestion_emprunts";
     
     if ($db = mysqli_connect($hostname, $username, $mdp,$database))
         return $db;

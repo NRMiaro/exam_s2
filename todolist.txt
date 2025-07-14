@@ -1,0 +1,36 @@
+Version 01:
+Base de données:
+
+    [ok] Créer la table membre (id_membre, nom , date de naissance, genre, émail, ville, mdp, image_profil)
+
+    [ok] Créer la table categorie_objet (id_categorie, nom_categorie)
+
+    [ok] Créer la table objet (id_objet , nom_objet , id_categorie, id_membre)
+
+    [ok] Créer la table images_objet(id_image, id_objet, nom_image)
+
+    [ok] Créer la table emprunt(id_emprunt, id_objet, id_membre, date_emprunt, date_retour)
+
+    [ok] Insérer les données de test :
+
+        [ok] 4 membres
+
+        [ok] 4 catégories (esthétique, bricolage, mécanique, cuisine)
+
+        [ok] 10 objets par membre répartis dans les catégories
+
+        [ok] 10 emprunts
+
+Pages à créer:
+
+    [ok] Page de connexion (login.php)
+
+    [ok] Page d'inscription (signin.php) avec image de profil
+
+    [ok] Page accueil (accueil.php) :
+
+        [ok] Afficher les objets
+
+        [ok] Afficher la date de retour si emprunt en cours
+
+        [ok] Ajout d’un filtre par catégorie
