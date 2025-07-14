@@ -36,12 +36,48 @@ function getObjets(){
     while ($line = mysqli_fetch_assoc($data)){
         $retour = $line['date_retour'] == null ? "Non emprunté" : $line['date_retour'];
         $liste[] = [
-            'objet' => $line['objet'],
+            'nom' => $line['objet'],
             'retour' => $retour
         ];
     }
     return $liste;
 }
+
+function getCategories(){
+    $db = getDB();
+    $sql = "SELECT nom_categorie FROM emprunts_categorie_objet";
+    $result = mysqli_query($db, $sql);
+    $liste = [];
+    while ($line = mysqli_fetch_assoc($result)){
+        $liste[] = $line['nom_categorie'];
+    }
+    return $liste;
+}
+
+function getObjetsParCategorie($categorie){
+    $db = getDB();
+
+    if ($categorie === "TOUS") {
+        return getObjets(); 
+    } else {
+        $categorie = mysqli_real_escape_string($db, $categorie); // sécurisation
+        $sql = "SELECT * FROM vue_objet_categorie WHERE categorie = '$categorie'";
+        echo $sql;
+        $data = mysqli_query($db, $sql);
+
+        $liste = [];
+        while ($line = mysqli_fetch_assoc($data)) {
+            $retour = $line['retour'] == null ? "Non emprunté" : $line['retour'];
+            $liste[] = [
+                'nom' => $line['objet'],
+                'categorie' => $line['categorie'],
+                'retour' => $retour
+            ];
+        }
+        return $liste;
+    }
+}
+
 
 
 ?>

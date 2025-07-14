@@ -1,2 +1,0 @@
-index.php:
-    redirige vers login.php si l'user n'est pas connecté
